@@ -1,0 +1,19 @@
+[ {
+  "concepts" : [ {
+    "concept" : "nuance_tv_query",
+    "value" : "tom hanks",
+    "literal" : "Tom Hanks",
+    "begin" : 5,
+    "end" : 14
+  }, {
+    "concept" : "nuance_tv_mediatype",
+    "value" : "movie",
+    "literal" : "movies",
+    "begin" : 15,
+    "end" : 21
+  } ],
+  "confidence" : 92,
+  "literal" : "show Tom Hanks movies on 12th of september",
+  "intent" : "nuance_tv_media_search",
+  "origin" : "STATISTICAL"
+} ]

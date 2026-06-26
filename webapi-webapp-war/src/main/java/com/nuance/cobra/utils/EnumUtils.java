@@ -1,0 +1,14 @@
+package com.nuance.cobra.utils;
+
+import java.util.Arrays;
+
+public class EnumUtils
+{
+    private EnumUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    public static String[] getNames(Class<? extends Enum<?>> e) {
+        return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
+    }
+}

@@ -1,0 +1,19 @@
+[ {
+  "concepts" : [ {
+    "concepts" : [ {
+      "concept" : "nuance_CARDINAL_NUMBER",
+      "value" : "456",
+      "literal" : "456",
+      "begin" : 8,
+      "end" : 11
+    } ],
+    "concept" : "nuance_tv_value",
+    "literal" : "456",
+    "begin" : 8,
+    "end" : 11
+  } ],
+  "confidence" : 100,
+  "literal" : "Channel 456",
+  "intent" : "nuance_tv_channel_set",
+  "origin" : "GRAMMAR"
+} ]

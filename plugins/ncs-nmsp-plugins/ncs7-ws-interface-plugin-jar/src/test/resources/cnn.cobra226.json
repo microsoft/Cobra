@@ -1,0 +1,13 @@
+[ {
+  "concepts" : [ {
+    "concept" : "nuance_tv_station",
+    "value" : "cnn",
+    "literal" : "cnn",
+    "begin" : 0,
+    "end" : 3
+  } ],
+  "confidence" : 100,
+  "literal" : "cnn",
+  "intent" : "nuance_tv_channel_set",
+  "origin" : "GRAMMAR"
+} ]

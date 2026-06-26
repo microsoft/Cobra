@@ -1,0 +1,16 @@
+[ {
+  "concepts" : {
+    "nuance_tv_station" : [ {
+      "value" : "cnn",
+      "ranges" : [ [ 0, 3 ] ],
+      "literal" : "cnn"
+    } ]
+  },
+  "action" : {
+    "intent" : {
+      "confidence" : 1.0,
+      "value" : "nuance_tv_channel_set"
+    }
+  },
+  "literal" : "cnn"
+} ]

@@ -1,0 +1,19 @@
+Nuance ASR gRPC proto files
+Nuance Communications, Inc.
+April 12, 2021
+Protocol version v1
+
+This zip file contains ASR proto files and RPC common status proto files, in this structure. 
+ 
+nuance
+   asr
+      v1
+         recognizer.proto 
+         resource.proto 
+         result.proto
+   rpc
+      error_details.proto
+      status.proto
+      status_code.proto
+
+Keep the same structure when unzipping the files and generating client stubs for your programming language. It you have existing RPC proto files in your environment, you may safely overwrite them, as these files are the same for all Nuance products.  

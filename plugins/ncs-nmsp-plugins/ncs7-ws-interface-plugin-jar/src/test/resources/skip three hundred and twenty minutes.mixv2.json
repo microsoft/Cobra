@@ -1,0 +1,27 @@
+[ {
+  "concepts" : {
+    "nuance_tv_duration" : [ {
+      "concepts" : {
+        "nuance_DURATION" : [ {
+          "ranges" : [ [ 5, 37 ] ],
+          "literal" : "three hundred and twenty minutes",
+          "value" : {
+            "nuance_DURATION_ABS" : {
+              "nuance_NUMBER" : 320,
+              "nuance_UNIT" : "minute"
+            }
+          }
+        } ]
+      },
+      "ranges" : [ [ 5, 37 ] ],
+      "literal" : "three hundred and twenty minutes"
+    } ]
+  },
+  "action" : {
+    "intent" : {
+      "confidence" : 0.61,
+      "value" : "nuance_tv_mediacmd_forward"
+    }
+  },
+  "literal" : "skip three hundred and twenty minutes"
+} ]

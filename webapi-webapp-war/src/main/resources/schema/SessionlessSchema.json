@@ -1,0 +1,133 @@
+{
+  "title": "JSON Schema for Web API 1.0.0",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id":"resource:schema/SessionlessSchema.json",
+  "type":"object",
+  "properties":{
+    "applicationKey": {
+      "type": "string"
+    },
+    "verificationCode": {
+      "type": "string"
+    },
+    "speechDetector": {
+      "enum":[
+        "legacy",
+        "adaptive",
+        "engine"
+      ]
+    },
+    "beginNoiseSampleFrames": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum":true
+    },
+    "voiceThreshold": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum":true
+    },
+    "startOfSpeechFrames": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum":true
+    },
+    "startOfSpeechVoicedFrames": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum":true
+    },
+    "startOfSpeechHistoryFrames": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum":true
+    },
+    "endOfSpeechFrames": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum":true
+    },
+    "endOfSpeechVoicedFrames": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum":true
+    },
+    "endOfSpeechHistoryFrames": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum":true
+    },
+    "considerNegativeRatios": {
+      "type": "boolean"
+    },
+    "speechRecognitionCodec": {
+      "enum": [
+        "pcm_16_8k",
+        "pcm_16_16k",
+        "opus_16_16k",
+        "opus_wb",
+        "opus_16_8k",
+        "opus_nb",
+        "speex_nb",
+        "speex_wb",
+        "ulaw",
+        "alaw",
+        "ima_adpcm"
+      ]
+    },
+    "speechSynthesisCodec": {
+      "enum": [
+        "pcm_16_8k",
+        "pcm_16_16k",
+        "pcm_16_22k",
+        "opus_16_24k",
+        "opus_16_16k",
+        "opus_wb",
+        "opus_16_8k",
+        "opus_nb",
+        "speex_nb",
+        "speex_wb",
+        "ulaw"
+      ]
+    },
+    "clientUserId": {
+      "type": "string"
+    },
+    "clientDeviceId": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_\\-\\.]*$"
+    },
+    "clientSessionId": {
+      "type": "string"
+    },
+    "clientOsName": {
+      "type": "string"
+    },
+    "clientOsVersion": {
+      "type": "string"
+    },
+    "clientDetails": {
+      "type": "object"
+    },
+    "stubBackend": {
+      "type": "boolean"
+    },
+    "statistics": {
+      "type": "boolean"
+    },
+    "debugAudioCapture": {
+      "type": "number",
+      "minimum":0
+    },
+    "authentication": {
+      "type": "object"
+    },
+    "sensitivity": {
+      "enum": [
+        "encrypted",
+        "masked",
+        "open"
+      ]
+    }
+  }
+}

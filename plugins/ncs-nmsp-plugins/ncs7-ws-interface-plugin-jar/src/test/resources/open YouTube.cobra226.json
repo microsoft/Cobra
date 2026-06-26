@@ -1,0 +1,13 @@
+[ {
+  "concepts" : [ {
+    "concept" : "nuance_tv_appname",
+    "value" : "YouTube",
+    "literal" : "YouTube",
+    "begin" : 5,
+    "end" : 12
+  } ],
+  "confidence" : 100,
+  "literal" : "open YouTube",
+  "intent" : "nuance_tv_open_app",
+  "origin" : "GRAMMAR"
+} ]

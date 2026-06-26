@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.nuance.omnichannel</groupId>
+  <artifactId>nuance-webapi-refguide</artifactId>
+  <version>2.31.17-SNAPSHOT</version>
+  <name>Nuance WebApi Reference Guide Doc</name>
+  <description>Nuance WebApi Reference Guide Doc</description>
+  <packaging>pom</packaging>
+  
+  
+ <properties>
+	<rpm.install.dir>/usr/local/Nuance/nuance-webapi-refguide</rpm.install.dir>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties> 
+ 
+  <profiles>
+
+    <!--
+         Only run the RPM packaging on Linux as we need the rpm binary to build
+         rpm using the rpm plugin.
+    -->
+    <profile>
+      <id>rpm</id>
+	   <activation>
+        <os>
+          <name>linux</name>
+        </os>
+      </activation>
+      <build>
+	    <pluginManagement>
+		  <plugins>
+			<plugin>
+			  <groupId>org.codehaus.mojo</groupId>
+			  <artifactId>rpm-maven-plugin</artifactId>
+			  <version>2.2.0</version>
+			</plugin>
+		  </plugins>
+		</pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>com.keyboardsamurais.maven</groupId>
+            <artifactId>maven-timestamp-plugin</artifactId>
+            <version>1.0</version>
+            <configuration>
+              <propertyName>timestamp</propertyName>
+              <timestampPattern>yyyyMMddHHmm</timestampPattern>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>create</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>rpm-maven-plugin</artifactId>
+            <version>2.2.0</version>
+            <extensions>true</extensions>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>rpm</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <copyright>Copyright 2019 Nuance Communications</copyright>
+              <distribution>Nuance</distribution>
+              <group>${project.groupId}</group>
+              <packager>${user.name}</packager>
+              <!-- need to use the build number plugin here in order for yum upgrade
+              to work in snapshots -->
+              <release>${timestamp}</release>
+              <defaultDirmode>755</defaultDirmode>
+              <defaultFilemode>644</defaultFilemode>
+              <defaultUsername>tomcat</defaultUsername>
+              <defaultGroupname>tomcat</defaultGroupname>
+              <requires>
+                <require>nuance-tomcat</require>
+				<require>jdk</require>
+				<require>nep-frontend</require>
+              </requires>
+              <mappings>
+                <!-- webapps deployment -->
+                <mapping>
+                  <directory>${rpm.install.dir}/webapp</directory>
+                  <sources>
+					<source>
+                      <location>./artifacts/nep-webapi-apidocs.war</location>
+                      <destination>nep-webapi-apidocs.war</destination>
+                    </source>             
+                  </sources>
+                </mapping>
+              </mappings>
+              <postinstallScriptlet>
+                <scriptFile>./src/scripts/postinstall.sh</scriptFile>
+              </postinstallScriptlet>
+              <preremoveScriptlet>
+                <scriptFile>./src/scripts/preuninstall.sh</scriptFile>
+              </preremoveScriptlet>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  
+</project>

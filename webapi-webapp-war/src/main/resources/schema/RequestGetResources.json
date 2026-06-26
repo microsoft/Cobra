@@ -1,0 +1,44 @@
+{
+  "title": "JSON Schema for Web API 1.0.0",
+  "description": "Validate request for resources",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "type",
+    "command"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "pattern": "^command$"
+    },
+    "sessionId": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "command": {
+      "$ref": "#/definitions/getResourcesCommand"
+    }
+  },
+  "definitions": {
+    "getResourcesCommand": {
+      "required": [
+        "name",
+        "id"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^getResources$"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

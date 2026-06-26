@@ -1,0 +1,18 @@
+[ {
+  "concepts" : [ {
+    "concept" : "nuance_DURATION",
+    "value" : {
+      "nuance_DURATION_ABS" : {
+        "nuance_UNIT" : "second",
+        "nuance_NUMBER" : 120.0
+      }
+    },
+    "literal" : "one hundred and twenty seconds",
+    "begin" : 0,
+    "end" : 30
+  } ],
+  "confidence" : 100,
+  "literal" : "one hundred and twenty seconds",
+  "intent" : "NO_INTENT",
+  "origin" : "GRAMMAR"
+} ]

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="charset=UTF-8; X-Content-Type-Options=nosniff" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>Tenant Config Validator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .column {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            height: 600px;
+        }
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        textarea{
+            padding: 12px 20px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            background-color: #f8f8f8;
+            resize: none;
+        }
+        .config {
+            width: 100%;
+            height: 100%;
+            resize: none;
+            -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+            -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+            box-sizing: border-box;         /* Opera/IE 8+ */
+        }
+        .config-result {
+            background-color: beige
+        }
+        .button-div{
+            padding: 10px;
+        }
+        .button {
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+            cursor: pointer;
+            color: black;
+            border: 2px solid #7030a0;
+            border-radius: 12px;
+        }
+        .button:hover {
+            background-color: #7030a0; /* Green */
+            color: white;
+        }
+        .header{
+            align-content: center;
+            text-align: center;
+            padding: 10px;
+            padding-bottom: 0px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 36px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+    <form method="POST" action="" class="form" id="validationForm">
+        <h1 class="header"> Cobra Tenant Config Validator v1.0</h1>
+        <div class="column">
+            <textarea id="config" class="config" placeholder="Write here..."></textarea>
+        </div>
+        <div class="column">
+            <textarea id="response" class="config config-result" readonly></textarea>
+        </div>
+        <div class="button-div">
+            <button type="submit" class="button">Submit</button>
+        </div>
+    </form>
+</div>
+<script>
+$("#validationForm").submit(function(event) {
+    event.preventDefault();
+
+    var $form = $(this);
+
+    var config = $("#config").val();
+
+    $('#response').val("");
+
+    if(IsJsonString(config)){
+        $.ajax({
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: encodeURIComponent(config),
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader( "Content-type", "application/json" );
+            },
+            success: function(data){
+                var response = JSON.stringify(data, null, 4);
+                $('#response').val(response);
+                //console.log(response);
+            },
+            error: function(request, response, error){
+                alert(request.responseText);
+                //console.log(request.responseText);
+            }
+        })
+    }else{
+        alert('Please check your input.');
+    }
+});
+function IsJsonString(str) {
+    if(str != ""){
+        try {
+            var o = JSON.parse(str);
+            if (o && typeof o === "object") {
+                return true;
+            }
+        } catch (e) {
+            return false;
+        }
+    }else{
+        return false;
+    }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+/**
+ * This is one of proto files that defines the metrics that are
+ * added to the interpretation result
+ */
+
+syntax = "proto3";
+
+package nuance.nlu.interpret.v1;
+
+option java_multiple_files = true;
+option java_package = "com.nuance.rpc.nlu.interpret.v1";
+option java_outer_classname = "MetricsProto";
+
+message Metrics {
+    string modelLanguage = 1;
+    map<string, string> versions = 2;
+    repeated string tokens = 3;
+}

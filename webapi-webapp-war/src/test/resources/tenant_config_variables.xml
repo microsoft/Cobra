@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+    <variables>
+        <var1>nuance</var1>
+        <var2>8911</var2>
+        <var3>true</var3>
+    </variables>
+    <nmspGatewayHost>nim-rd.${var1}.mobi</nmspGatewayHost>
+    <nmspGatewayPort>${var2}</nmspGatewayPort>
+    <nmspGatewaySSLEnabled>${var3}</nmspGatewaySSLEnabled>
+</root>

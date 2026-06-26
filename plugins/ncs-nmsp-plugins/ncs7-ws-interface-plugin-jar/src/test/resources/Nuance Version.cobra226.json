@@ -1,0 +1,12 @@
+[ {
+  "concepts" : [ {
+    "concept" : "nuance_tv_query",
+    "literal" : "Nuance Version",
+    "begin" : 0,
+    "end" : 14
+  } ],
+  "confidence" : 75,
+  "literal" : "Nuance Version",
+  "intent" : "nuance_tv_media_search",
+  "origin" : "STATISTICAL"
+} ]

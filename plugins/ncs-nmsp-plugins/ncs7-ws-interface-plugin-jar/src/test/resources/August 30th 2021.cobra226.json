@@ -1,0 +1,23 @@
+[ {
+  "concepts" : [ {
+    "concept" : "nuance_CALENDARX",
+    "value" : {
+      "nuance_CALENDAR" : {
+        "nuance_DATE" : {
+          "nuance_DATE_ABS" : {
+            "nuance_DAY" : 30.0,
+            "nuance_MONTH" : 8.0,
+            "nuance_YEAR" : 2021.0
+          }
+        }
+      }
+    },
+    "literal" : "August 30th 2021",
+    "begin" : 0,
+    "end" : 16
+  } ],
+  "confidence" : 100,
+  "literal" : "August 30th 2021",
+  "intent" : "NO_INTENT",
+  "origin" : "GRAMMAR"
+} ]

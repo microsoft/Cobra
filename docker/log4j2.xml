@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--The %replace function matches empty sessionId's and masks them with x's-->
+            <JsonLayout complete="false" compact="true" eventEol="true" properties="true"/>
+        </Console>
+    </Appenders>
+ 
+    <Loggers>
+        <Logger name="com.nuance.cobra" level="info"/>
+        <Logger name="com.nuance.nmsp.client" level="warn">
+          <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="warn">
+          <AppenderRef ref="Console"/>
+            <Filters>
+                <!-- The following regex filters out an ERROR message that is normal. This message is not an error -->
+                <!-- for the speech synthesis command. Since this message comes from a third party we cannot change -->
+                <!-- i.e. another team in Nuance, we filter out the message here. See Rally DE14100 for details but -->
+                <!-- Rally won't be accessible anymore when you will want to read this comment. Sorry. -->
+                <RegexFilter regex=".*Session Idle for too long, longer than \[.*\].*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex=".*BCP_LOG_RESPONSE is deprecated.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex=".*Read buffer is null. Maybe requested to disconnect.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+        </Root>
+    </Loggers>
+ 
+</Configuration>

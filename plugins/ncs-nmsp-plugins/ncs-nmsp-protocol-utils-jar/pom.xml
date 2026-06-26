@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.nuance</groupId>
+        <artifactId>ncs-nmsp-plugins</artifactId>
+        <version>2.33.46-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>ncs-nmsp-protocol-utils-jar</artifactId>
+    <packaging>jar</packaging>
+    <!-- Removed the version due to packaging version mismatch issue from Jan 6th, 2022 for DTV -->
+    <!-- Please do not break this again by putting back the version, thanks -->
+
+    <dependencies>
+        <dependency>
+            <groupId>com.nuance</groupId>
+            <artifactId>webapi-utils</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>provided</scope>
+            <exclusions>
+                <!-- webapi-utils transitively pulls Netty 4.1.x; we use 4.2.x via netty-all
+                     and the version mismatch breaks ByteBufAllocator static init. -->
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.2.12.Final</version>
+        </dependency>
+    </dependencies>
+</project>

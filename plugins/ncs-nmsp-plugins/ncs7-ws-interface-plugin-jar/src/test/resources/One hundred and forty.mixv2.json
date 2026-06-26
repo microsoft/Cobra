@@ -1,0 +1,22 @@
+[ {
+  "concepts" : {
+    "nuance_tv_value" : [ {
+      "concepts" : {
+        "nuance_CARDINAL_NUMBER" : [ {
+          "ranges" : [ [ 0, 21 ] ],
+          "literal" : "One hundred and forty",
+          "value" : "140"
+        } ]
+      },
+      "ranges" : [ [ 0, 21 ] ],
+      "literal" : "One hundred and forty"
+    } ]
+  },
+  "action" : {
+    "intent" : {
+      "confidence" : 1.0,
+      "value" : "nuance_tv_channel_set"
+    }
+  },
+  "literal" : "One hundred and forty"
+} ]

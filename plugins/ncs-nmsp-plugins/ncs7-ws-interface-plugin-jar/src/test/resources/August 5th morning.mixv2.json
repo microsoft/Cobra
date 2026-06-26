@@ -1,0 +1,15 @@
+[ {
+  "concepts" : {
+    "nuance_tv_query" : [ {
+      "ranges" : [ [ 0, 18 ] ],
+      "literal" : "August 5th morning"
+    } ]
+  },
+  "action" : {
+    "intent" : {
+      "confidence" : 0.95,
+      "value" : "nuance_tv_media_na"
+    }
+  },
+  "literal" : "August 5th morning"
+} ]

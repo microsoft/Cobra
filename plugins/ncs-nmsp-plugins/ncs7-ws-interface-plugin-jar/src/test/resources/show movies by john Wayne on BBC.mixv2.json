@@ -1,0 +1,21 @@
+[ {
+  "concepts" : {
+    "nuance_tv_mediatype" : [ {
+      "value" : "movie",
+      "ranges" : [ [ 5, 11 ] ],
+      "literal" : "movies"
+    } ],
+    "nuance_tv_query" : [ {
+      "value" : "john wayne",
+      "ranges" : [ [ 15, 25 ] ],
+      "literal" : "john Wayne"
+    } ]
+  },
+  "action" : {
+    "intent" : {
+      "confidence" : 1.0,
+      "value" : "nuance_tv_media_search"
+    }
+  },
+  "literal" : "show movies by john Wayne on BBC"
+} ]

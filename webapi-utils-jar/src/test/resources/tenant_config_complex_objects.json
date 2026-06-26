@@ -1,0 +1,77 @@
+{
+  "simple_string" : "string",
+  "simple_int": 1,
+  "compose_object": {
+    "simple_string": "string"
+  },
+  "compose_complex_object": {
+    "compose_object" : {
+      "simple_int": 1
+    }
+  },
+
+  "compose_complex_object_with_list": {
+    "simple_string" : "string",
+    "single_list": ["one"],
+    "multi_list": ["one", "two", "three"],
+    "compose_object" : {
+      "simple_int": 1,
+      "compose_multi_list": [
+        { "simple_int" :  1},
+        { "simple_int" :  2},
+        { "simple_int" :  3}
+      ]
+    }
+  },
+
+  "single_list": ["one"],
+  "multi_list": ["one", "two", "three"],
+
+  "compose_single_list": [
+    { "simple_int" :  1}
+  ],
+
+  "compose_multi_list": [
+    { "simple_int" :  1},
+    { "simple_int" :  2},
+    { "simple_int" :  3}
+  ],
+
+  "compose_complex_single_list": [
+    { "compose_object" : {
+      "simple_int": 1,
+      "compose_multi_list": [
+        { "simple_int" :  1},
+        { "simple_int" :  2},
+        { "simple_int" :  3}
+      ]
+    }}
+  ],
+
+  "compose_complex_multi_list": [
+    { "compose_object" : {
+      "simple_int": 1,
+      "compose_multi_list": [
+        { "simple_int" :  1},
+        { "simple_int" :  2},
+        { "simple_int" :  3}
+      ]
+    }},
+    { "compose_object" : {
+      "simple_int": 1,
+      "compose_multi_list": [
+        { "simple_int" :  1},
+        { "simple_int" :  2},
+        { "simple_int" :  3}
+      ]
+    }},
+    { "compose_object" : {
+      "simple_int": 1,
+      "compose_multi_list": [
+        { "simple_int" :  1},
+        { "simple_int" :  2},
+        { "simple_int" :  3}
+      ]
+    }}
+  ]
+}

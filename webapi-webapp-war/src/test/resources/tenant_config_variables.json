@@ -1,0 +1,10 @@
+{
+  "variables": {
+    "var1": "nuance",
+    "var2": 8911,
+    "var3": true
+  },
+  "nmspGatewayHost": "nim-rd.${var1}.mobi",
+  "nmspGatewayPort": "${var2}",
+  "nmspGatewaySSLEnabled": "${var3}"
+}

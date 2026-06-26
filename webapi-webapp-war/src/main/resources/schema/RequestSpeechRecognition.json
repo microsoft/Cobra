@@ -1,0 +1,328 @@
+{
+
+  "title": "JSON Schema for Web API 1.0.0",
+
+  "Description": "Validate a speech recognition request",
+
+  "$schema": "http://json-schema.org/draft-04/schema#",
+
+  "type": "object",
+
+  "required": [
+
+    "type",
+
+    "sessionId",
+
+    "command"
+
+  ],
+
+  "properties": {
+
+    "type": {
+
+      "type": "string",
+
+      "pattern": "^command$"
+
+    },
+
+    "sessionId": {
+
+      "type": "string"
+
+    },
+
+    "metadata": {
+
+      "type": "object"
+
+    },
+
+    "command": {
+
+      "$ref": "#/definitions/speechRecognitionCommand"
+
+    }
+
+  },
+
+  "additionalProperties": false,
+
+  "definitions": {
+
+    "speechRecognitionCommand": {
+
+      "required": [
+
+        "name",
+
+        "id"
+
+      ],
+
+      "properties": {
+
+        "name": {
+
+          "type": "string",
+
+          "pattern": "^speechRecognition$"
+
+        },
+
+        "id": {
+
+          "type": "string"
+
+        },
+
+        "parameters": {
+
+          "$ref": "#/definitions/speechRecognitionParameters"
+
+        }
+
+      },
+
+      "additionalProperties": false
+
+    },
+
+    "speechRecognitionParameters": {
+
+      "type": "object",
+
+      "properties": {
+
+        "sessionParameters": {
+          "$ref": "SessionlessSchema.json#"
+        },
+
+
+        "language": {
+
+          "type": "string"
+
+        },
+
+        "topic": {
+
+          "type": "string"
+
+        },
+
+        "dialogModelApplicationVersion": {
+
+          "type": "string"
+
+        },
+
+        "speechRecognitionCodec": {
+          "$ref": "SessionlessSchema.json#/properties/speechRecognitionCodec"
+        },
+
+        "samplingRate": {
+
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+
+        },
+
+        "endPointDetection": {
+
+          "type": "boolean"
+
+        },
+
+        "speechDetector": {
+          "enum":[
+            "legacy",
+            "adaptive",
+            "engine"
+          ]
+        },
+
+        "beginNoiseSampleFrames": {
+
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+
+        },
+
+        "voiceThreshold": {
+
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+
+        },
+
+        "startOfSpeechFrames": {
+
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+
+        },
+
+        "startOfSpeechVoicedFrames": {
+
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+
+        },
+
+        "startOfSpeechHistoryFrames": {
+
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+
+        },
+
+        "endOfSpeechFrames": {
+
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+
+        },
+
+        "endOfSpeechVoicedFrames": {
+
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+
+        },
+
+        "endOfSpeechHistoryFrames": {
+
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+
+        },
+
+        "stopOnEndOfSpeech": {
+
+          "type": "boolean"
+
+        },
+
+        "startOfSpeechTimeoutSeconds": {
+
+          "type": "number",
+          "minimum": 0
+
+        },
+
+        "utteranceMaxTimeSeconds": {
+
+          "type": "number",
+          "minimum": 0
+
+        },
+
+        "wordStream": {
+
+          "type": "boolean"
+
+        },
+
+        "activeDynamicVocabularySets": {
+
+          "type": "array",
+
+          "items": {
+
+            "type": "string"
+
+          },
+
+          "minItems": 1,
+
+          "uniqueItems": true
+
+        },
+
+        "speechRecognitionEnableProfanityFilter": {
+
+          "type": "boolean"
+
+        },
+
+        "statistics": {
+
+          "type": "boolean"
+
+        },
+
+        "debugAudioCapture": {
+
+          "type": "number"
+
+        },
+
+        "considerNegativeRatios": {
+          "type": "boolean"
+        },
+
+        "sensitivity": {
+          "enum": [
+            "encrypted",
+            "masked",
+            "open"
+          ]
+        },
+
+        "noiseLevel": {
+          "type": "object",
+          "mean": "number",
+          "standardDeviation": "number"
+        },
+
+        "kryptonDomainLmUrl": {
+          "type": "string"
+        },
+
+        "kryptonEnableProfanityFilter": {
+          "type": "boolean"
+        },
+
+        "speechDomain": {
+          "type": "string"
+        },
+
+        "speechRecognitionVerboseResult": {
+          "type": "boolean"
+        },
+
+        "rawEngineResult": {
+          "type": "boolean"
+        },
+
+        "maxTranscriptions": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 10
+        },
+
+        "loadPersistedWordsets": {
+          "type": "boolean"
+        }
+      },
+
+      "additionalProperties": false
+
+    }
+
+  }
+
+}
+

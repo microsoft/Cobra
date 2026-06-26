@@ -1,0 +1,324 @@
+openapi: 3.0.1
+info:
+  title: Cloud Text-to-Speech API
+  description: Synthesizes natural-sounding speech by applying powerful neural network models.
+  contact: {}
+  version: 'v1.0.0'
+servers:
+  - url: https://{hostName}/webapi-platform/http/{tenantID}/rest
+    variables:
+      hostName:
+        default: API_HOST_NAME    # Production server
+      tenantID:
+        default: INSERT_ID    # Production server
+externalDocs:
+  url: https://github.com/nuance-communications/webapi
+  description: Project repository
+paths:
+  /text-to-speech/v1/voices:
+    get:
+      tags:
+        - Voices
+      summary: listV1Voices
+      description: Returns a list of voices supported for synthesis.
+      operationId: listV1Voices
+      responses:
+        200:
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/voices'
+      deprecated: false
+  /text-to-speech/v1/synthesize:
+    post:
+      tags:
+        - Text to Speech
+      summary: SynthesizeV1TextSynthesizePost
+      description: >-
+        Synthesizes speech synchronously: receive results after all text input has been processed.
+      operationId: synthesizeV1TextSynthesizePost
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/synthesizeSpeechRequestText'
+        required: true
+      responses:
+        2XX:
+          description: 'OK'
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/synthesizeSpeechResponse'
+        4XX:
+          description: 'Bad request'
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/synthesizeSpeechResponse'
+        5XX:
+          description: 'Server error'
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/synthesizeSpeechResponse'
+      deprecated: false
+components:
+  schemas:
+
+    audioConfig:
+      title: audioConfig
+      type: object
+      properties:
+        audioEncoding:
+          $ref: '#/components/schemas/audioEncoding'
+      description: Specifies the encoding type for the returned data.
+
+    audioEncoding:
+      title: audioEncoding
+      enum:
+        - pcm_16_8k
+        - pcm_16_16k
+        - pcm_16_22k
+        - opus_nb
+        - opus_wb
+      type: string
+      description: >-
+        Audio output format. Depending on the format, the sample rate must be specified using the rate parameter.
+         - Linear 16-bit PCM. Sample rate must be specified.
+            - `pcm_16_8k` or `pcm_16_16k` or `pcm_16_22k`
+         - Ogg Opus format. Sample rate must be specified.
+            - `opus_nb`
+            - `opus_wb`
+      example: pcm_16_22k
+      default: pcm_16_22k
+
+    audioResult:
+      title: audioResult
+      type: object
+      description: >-
+        The audio data bytes encoded as specified in the request, including the
+        header (For L16 audio, we include the WAV header). Note: as
+        with all bytes fields, protobuffers use a pure binary representation,
+        whereas JSON representations use `base64`. For example, *U3dhZ2dlciByb2Nrcw==*.
+        May be omitted in case of errors.
+      properties:
+        audioEncoding:
+          type: string
+        audioContent:
+          type: string
+          format: byte
+
+    clientMetaDataConfig:
+      title: clientMetadataConfig
+      type: object
+      description: Freeform metadata provided by the client to help track information. Do not use this to exchange information with privacy concerns, use one-way hashes to encode information if necessary.
+
+    error:
+      title: error
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+      example:
+        code: 1105
+        message: Tenant rate limit exceeded for concurrent WebAPI Sessions, Please try after some time
+      description: Error code and error message
+
+    errors:
+      title: errors
+      type: array
+      items:
+        $ref: '#/components/schemas/error'
+      description: Optional list of errors
+
+    generalConfig:
+      title: General Configuration
+      properties:
+        sensitivity:
+          type: string
+          description: >-
+            String that controls whether or not sensitive data for this command will be encrypted when logged to disk and reporting platform. 
+
+            Parameters description: `open` - non-encrypted, `masked` - replace everything with same character (Information will be lost forever), `encrypted` - data encrypted using a provided key
+          enum:
+            - encrypted
+            - masked
+            - open
+          default: open
+          example: masked
+        statistics:
+          type: boolean
+          default: false
+          description: Whether or not to return statistics on the command's performance.
+
+    requestId:
+      title: requestId
+      type: string
+      description: >-
+         RequestID assigned by the service to allow one to track logged information.
+         In case of errors, could be set to the string: 'NULL'.
+      example: 19f05d00-5470-4d69-b14e-a7816ada1c36
+
+    gender:
+      title: Gender
+      enum:
+        - Gender_Unspecified
+        - Male
+        - Female
+        - Neutral
+      type: string
+      description: The gender of this voice.
+      example: Female
+
+    synthesisInputText:
+      title: synthesisInput
+      type: object
+      properties:
+        text:
+          type: string
+          description: >-
+            The text or ssml to synthesize. See below for examples with text or ssml.
+          example: Hello world!
+          maxLength: 64512
+        type:
+          type: string
+          description: >-
+            The type used for the input data. 'ssml' type is disabled by default.
+            Please contact Nuance Technical Support Team to explicitly enable it.
+          enum:
+            - text
+            - ssml
+          default: text
+          example: text
+      required:
+        - text
+      description: >-
+        Contains text input to be synthesized. Either `text` or `ssml` must be
+        supplied. The input size is limited by the maximum duration of the generated audio. By default
+        the maximum lenght of audio is 30s. This limit may vary based on your tenant configuration.
+
+    synthesizeSpeechRequestText:
+      title: synthesizeSpeechRequestText
+      type: object
+      properties:
+        generalConfig:
+          $ref: '#/components/schemas/generalConfig'
+        input:
+          $ref: '#/components/schemas/synthesisInputText'
+        voice:
+          $ref: '#/components/schemas/voiceSelectionParams'
+        audioConfig:
+          $ref: '#/components/schemas/audioConfig'
+        clientMetaDataConfig:
+          $ref: '#/components/schemas/clientMetaDataConfig'
+      description: The top-level message sent by the client for the `SynthesizeSpeech` method.
+      required:
+        - input
+        - voice
+
+    synthesizeSpeechResponse:
+      title: synthesizeSpeechResponse
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/requestId'
+        result:
+          $ref: '#/components/schemas/audioResult'
+        errors:
+          $ref: '#/components/schemas/errors'
+      description: The message returned to the client by the `SynthesizeSpeech` method.
+
+    voice:
+      title: voice
+      type: object
+      properties:
+        language:
+          type: string
+          description: >-
+            The languages that this voice supports, expressed as
+            [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tags (e.g.
+            "en-US", "es-419", "cmn-tw").
+          example: en-us
+        codec:
+          type: string
+          description: The natural sample rate (in hertz) for this voice.
+          example: pcm_16_22k
+        name:
+          type: string
+          description: The name of this voice.  Each distinct voice has a unique name.
+          example: Zoe
+        voice_age:
+          type: string
+          description: Description of the voice age.
+          example: Adult
+        voice_gender:
+          $ref: '#/components/schemas/gender'
+      description: Description of a voice supported by the TTS service.
+
+    voices:
+      title: voices
+      type: object
+      properties:
+        voices:
+          type: array
+          items:
+            $ref: '#/components/schemas/voice'
+          description: The list of voices.
+      description: The message returned to the client by the `ListVoices` method.
+      example:
+        voices:
+          - voice_gender: Female
+            voice:
+              - codec: pcm_16_22k
+                voice_model: full_vssq5f22
+              - codec: pcm_16_8k
+                voice_model: full_encryptf8
+            voice_age: Adult
+            name: Luciana
+            language: pt-br
+          - voice_gender: Female
+            voice:
+              - codec: pcm_16_22k
+                voice_model: xpremium
+            voice_age: Adult
+            name: Geeta
+            language: te-in
+
+    voiceSelectionParams:
+      title: voiceSelectionParams
+      type: object
+      properties:
+        voice:
+          type: string
+          description: >-
+            The name of the voice.If not set, the service will use the default voice set for your tenant.
+          example: Ava
+          default: TENANT_CONFIG specific
+      description: The name of the voice to be used. To get a list of all supported voices see the voices api.
+
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: apiKey
+security:
+  - httpBearer: []
+  - ApiKeyAuth: []
+tags:
+  - name: Voices
+    description: 'Information about voices'
+  - name: Text to Speech
+    description: 'Converts text to speech'

@@ -1,0 +1,76 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Monitoring api
+  description: >-
+    A simple API to allow external customers to monitor the availability of
+    backend services.
+    
+servers:
+  - url: '{protocol}://PLEASE_ADD_A_VALID_ONE.nuance.mobi/webapi-platform/http/companyName_appName/monitoring/'
+    variables:
+      protocol:
+        enum:
+          - https
+        default: https
+paths:
+  /tenant/monitoring:
+    get:
+      summary: Gets the status of configured background services.
+      description: Returns a list containing the status of different backend services.
+      responses:
+        '200':
+          description: A list of backend services
+          content:
+            application/json:
+              schema:
+                title: WebAPI backend services
+                type: object
+                properties:
+                  logTrackID:
+                    type: string
+                    description: A random UUID used for logging and log matching.
+                  status:
+                    type: string
+                    enum:
+                      - success
+                      - fail
+                    description: >-
+                      An agregated server status. If any of the backedn servers
+                      is down the status will be fail.
+                  format:
+                    type: string
+                    description: The version of the response format.
+                  hostInfo:
+                    type: object
+                    properties:
+                      version:
+                        type: string
+                        description: The version of webAPI.
+                      hostRegion:
+                        type: string
+                        description: >-
+                          The geographical identifier of the host running the
+                          checks.
+                      hostEnvironment:
+                        type: string
+                        description: >-
+                          The deployment environment of the host running the
+                          checks.
+                  services:
+                    type: object
+                    properties:
+                      serviceName:
+                        type: object
+                        properties:
+                          status:
+                            type: string
+                            enum:
+                              - UP
+                              - DOWN
+                            description: The status of the individual service.
+                          details:
+                            type: string
+                            description: >-
+                              Any aditionla information about the service check.
+                              For example the exception message.

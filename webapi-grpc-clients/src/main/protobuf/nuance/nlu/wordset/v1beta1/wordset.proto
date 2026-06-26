@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package nuance.nlu.wordset.v1beta1;
+
+import "google/api/annotations.proto";
+// See https://confluence.labs.nuance.com/display/CTARCH/Errors+and+Status+responses
+import "nuance/rpc/status.proto";
+import "nuance/nlu/common/v1beta1/job.proto";
+import "nuance/nlu/common/v1beta1/resource.proto";
+
+option java_multiple_files = true;
+option java_package = "com.nuance.rpc.nlu.wordset.v1beta1";
+option java_outer_classname = "WordsetProto";
+
+/*
+ Wordset APIs
+*/
+service Wordset {
+    rpc CompileWordsetAndWatch (CompileWordsetRequest) returns (stream WatchJobStatusResponse){
+        // Submit and watch for job completion (server streaming).
+        option (google.api.http) = {
+            post: "/nlu/v1beta1/wordset/compile"
+            body: "*"
+        };
+    }
+    rpc GetWordsetMetadata (GetWordsetMetadataRequest) returns (GetWordsetMetadataResponse) {
+        // Gets a compiled wordset's metadata (unary).
+        option (google.api.http) = {
+            get: "/nlu/v1beta1/wordset/metadata"
+            body: "*"
+        };
+    }
+    rpc DeleteWordset (DeleteWordsetRequest) returns (DeleteWordsetResponse) {
+        // Deletes a compiled wordset (unary).
+        option (google.api.http) = {
+            delete: "/nlu/v1beta1/wordset"
+            body: "*"
+        };
+    }
+}
+
+/*
+Request to compile a wordset.
+*/
+message CompileWordsetRequest {
+    string wordset = 1; // Mandatory. Inline wordset JSON resource. Note: 4 MB request size limit.
+    nuance.nlu.common.v1beta1.ResourceReference companion_artifact_reference = 2; // Mandatory. Reference to the companion artifact to use during compilation. 
+    nuance.nlu.common.v1beta1.ResourceReference target_artifact_reference = 3; // Mandatory. Reference for the generated target wordset artifact.
+    map<string, string> metadata = 4; // Client-supplied key,value pairs to associate with the artifact.
+    map<string, string> client_data = 5; // Client-supplied key,value pairs to inject into the logs.
+}
+
+/*
+Response to a WatchJobStatus request.
+*/
+message WatchJobStatusResponse {
+    nuance.nlu.common.v1beta1.JobStatusUpdate job_status_update = 1; // Immediate job status
+    nuance.rpc.Status request_status = 2; // Request status. Returned once at the end.
+}
+
+/*
+Request to a GetWordsetMetadata request.
+*/
+message GetWordsetMetadataRequest {
+  nuance.nlu.common.v1beta1.ResourceReference artifact_reference = 1; // Reference to the wordset artifact.
+}
+
+/*
+Response to a GetWordsetMetadata request.
+*/
+message GetWordsetMetadataResponse {
+  map<string, string> metadata = 1; // Default and client-supplied key,value pairs.
+  nuance.rpc.Status request_status = 2; // Indicates whether fetching of metadata was done successfully.
+}
+
+/*
+Request to a DeleteWordset request.
+*/
+message DeleteWordsetRequest {
+  nuance.nlu.common.v1beta1.ResourceReference artifact_reference = 1; // Reference to the wordset artifact.
+}
+
+/*
+Response to a DeleteWordset request.
+*/
+message DeleteWordsetResponse {
+  nuance.rpc.Status request_status = 1; // Indicates whether deletion was done successfully.
+}

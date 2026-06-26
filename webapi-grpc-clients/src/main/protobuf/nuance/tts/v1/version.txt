@@ -1,0 +1,8 @@
+Nuance TTS gRPC proto file
+Nuance Communications, Inc. 
+March 3, 2021
+Protocol version v1
+
+Files in this zip are: synthesizer.proto, version.txt 
+
+

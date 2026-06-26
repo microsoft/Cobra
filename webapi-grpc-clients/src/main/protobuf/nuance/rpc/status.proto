@@ -1,0 +1,41 @@
+/*
+  Copyright (C) 2018 - 2019 Nuance Communications Inc. All Rights Reserved.
+ 
+  The copyright to the computer program(s) herein is the property of  
+  Nuance Communications Inc. The program(s) may be used and/or copied
+  only with the written permission from Nuance Communications Inc.
+  or in accordance with the terms and conditions stipulated in the
+  agreement/contract under which the program(s) have been supplied.
+*/
+
+syntax = "proto3";
+
+package nuance.rpc;
+
+import "nuance/rpc/status_code.proto";
+import "nuance/rpc/error_details.proto";
+
+option java_multiple_files = true;
+option java_package = "com.nuance.rpc";
+
+// Common status message
+message Status {
+  // status code, enum value from [nuance.rpc.StatusCodes], mandatory
+  StatusCode status_code = 1;
+  // application-specific status sub-code, optional
+  int32 status_sub_code = 2;
+  // HTTP status code for the transcoder, if applicable
+  int32 http_trans_code = 3;
+  // optional information about the original request
+  RequestInfo request_info = 4;
+  // optional message providing the details of this status
+  LocalizedMessage status_message = 5;
+  // optional help message providing the possible user action(s)
+  HelpInfo help_info = 6;
+  // optional set of field violations
+  repeated FieldViolation field_violations = 7;
+  // optional retry informaton
+  RetryInfo retry_info = 8;
+  // optional detailed status messages
+  repeated StatusDetail status_details = 9;
+}

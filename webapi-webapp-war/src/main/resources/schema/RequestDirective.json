@@ -1,0 +1,66 @@
+{
+  "title": "JSON Schema for Web API 1.0.0",
+  "Description": "Validate a directive request",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "type",
+    "directive",
+    "sessionId"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "pattern": "^directive$"
+    },
+    "sessionId": {
+      "type": "string"
+    },
+    "directive": {
+      "$ref": "#/definitions/directive"
+    },
+    "command": {
+      "$ref": "#/definitions/directiveCommand"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "directive": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "enum": [
+            "stop",
+            "cancel",
+            "startRecognitionTimers"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "directiveCommand": {
+      "required": [
+        "name",
+        "id"
+      ],
+      "properties": {
+        "name": {
+          "enum": [
+            "speechSynthesis",
+            "speechRecognition",
+            "interpretation"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "statistics": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

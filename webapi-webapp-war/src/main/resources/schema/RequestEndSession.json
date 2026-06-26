@@ -1,0 +1,57 @@
+{
+  "title": "JSON Schema for Web API 1.0.0",
+  "Description": "Validate an end session request",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "type",
+    "sessionId",
+    "command"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "pattern": "^command$"
+    },
+    "sessionId": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "command": {
+      "$ref": "#/definitions/endSessionCommand"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "endSessionCommand": {
+      "required": [
+        "name",
+        "id"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^endSession$"
+        },
+        "id": {
+          "type": "string"
+        },
+        "parameters": {
+          "$ref": "#/definitions/endSessionParameters"
+        }
+      },
+      "additionalProperties": false
+    },
+    "endSessionParameters": {
+      "type": "object",
+      "properties": {
+        "statistics": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
