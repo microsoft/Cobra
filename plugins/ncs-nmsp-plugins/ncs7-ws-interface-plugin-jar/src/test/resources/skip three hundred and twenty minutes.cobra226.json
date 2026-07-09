@@ -1,0 +1,24 @@
+[ {
+  "concepts" : [ {
+    "concepts" : [ {
+      "concept" : "nuance_DURATION",
+      "value" : {
+        "nuance_DURATION_ABS" : {
+          "nuance_UNIT" : "minute",
+          "nuance_NUMBER" : 20.0
+        }
+      },
+      "literal" : "twenty minutes",
+      "begin" : 23,
+      "end" : 37
+    } ],
+    "concept" : "nuance_tv_duration",
+    "literal" : "twenty minutes",
+    "begin" : 23,
+    "end" : 37
+  } ],
+  "confidence" : 44,
+  "literal" : "skip three hundred and twenty minutes",
+  "intent" : "nuance_tv_mediacmd_rewind",
+  "origin" : "STATISTICAL"
+} ]

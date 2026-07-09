@@ -1,0 +1,19 @@
+[ {
+  "concepts" : [ {
+    "concepts" : [ {
+      "concept" : "nuance_CARDINAL_NUMBER",
+      "value" : "530",
+      "literal" : "530",
+      "begin" : 0,
+      "end" : 3
+    } ],
+    "concept" : "nuance_tv_value",
+    "literal" : "530",
+    "begin" : 0,
+    "end" : 3
+  } ],
+  "confidence" : 100,
+  "literal" : "530",
+  "intent" : "nuance_tv_channel_set",
+  "origin" : "GRAMMAR"
+} ]

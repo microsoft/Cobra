@@ -1,0 +1,34 @@
+//  Copyright (C) 2021 - 2022 Nuance Communications, Inc. All Rights Reserved.
+//
+//  The copyright to the computer program(s) herein is the property of
+//  Nuance Communications, Inc. The program(s) may be used and/or copied
+//  only with the written permission from Nuance Communications, Inc.
+//  or in accordance with the terms and conditions stipulated in the
+//  agreement/contract under which the program(s) have been supplied.
+ 
+syntax = "proto3";
+ 
+package nuance.asr.forgetme.v1;
+ 
+import "nuance/rpc/status.proto";
+ 
+option java_multiple_files = true;
+option java_package = "com.nuance.rpc.asr.forgetme.v1";
+option java_outer_classname = "ForgetMeServiceProto";
+ 
+// ForgetMe service API. 
+service ForgetMe {
+  rpc DeleteSpeakerProfiles (DeleteSpeakerProfilesRequest) returns (DeleteSpeakerProfilesResponse);  // Delete speaker profile content (unary).
+}
+
+//Input message that requests deletion of a speaker profile.
+message DeleteSpeakerProfilesRequest {
+    reserved 2 to 4;
+    string user_id = 1;                                 // Required speaker profile user ID, see https://docs.mix.nuance.com/asr-grpc/v1/#speaker-profiles
+    map<string, string> client_data = 5;                // Optional client-supplied key,value pairs (up to 20) to inject into the logs
+}
+
+// Output message in response to a delete request.
+message DeleteSpeakerProfilesResponse {
+  nuance.rpc.Status status = 1;                         // OK means the data is not in the system anymore; NOT_FOUND means it was already deleted or never there.
+}

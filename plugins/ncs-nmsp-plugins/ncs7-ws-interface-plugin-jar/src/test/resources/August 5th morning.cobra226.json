@@ -1,0 +1,12 @@
+[ {
+  "concepts" : [ {
+    "concept" : "nuance_tv_query",
+    "literal" : "morning",
+    "begin" : 11,
+    "end" : 18
+  } ],
+  "confidence" : 79,
+  "literal" : "August 5th morning",
+  "intent" : "nuance_tv_media_na",
+  "origin" : "STATISTICAL"
+} ]

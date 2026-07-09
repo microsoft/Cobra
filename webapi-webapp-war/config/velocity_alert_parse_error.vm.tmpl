@@ -1,0 +1,21 @@
+{
+    "action":"${webApiConfig.getStringOrDefault("httpAlarmTempla
+    "method":"$systemProperties.get("testP
+    "data
+        #foreach ($error in $event.getErrors())
+        {
+            "device":"${tenant}",
+            "summary":"$utils.stringEscapeUtils().escapeEcmaScript($error.getMessage())",
+            "component":"WebAPI",
+            "severity":"$error.getSeverity()",
+            "evclasskey":"$error.getCode()",
+            "evclass":"$error.getInternalMessage()",
+            "encoded":"$utils.base64().encodeBase64String($error.getMessage().getBytes())"
+        }
+        #if (!$foreach.last)
+        ,
+        #end
+        #end
+    ],
+    "tid":1
+}

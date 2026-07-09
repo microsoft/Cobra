@@ -1,0 +1,184 @@
+{
+  "title": "JSON Schema for Web API 1.0.0",
+  "Description": "Validate a start session request",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "type",
+    "command"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^command$"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "command": {
+      "$ref": "#/definitions/startSessionCommand"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "startSessionCommand": {
+      "required": [
+        "name",
+        "id",
+        "parameters"
+      ],
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^startSession$"
+        },
+        "id": {
+          "type": "string"
+        },
+        "parameters": {
+          "$ref": "#/definitions/startSessionParameters"
+        }
+      },
+      "additionalProperties": false
+    },
+    "startSessionParameters": {
+      "type": "object",
+      "required": [
+        "applicationKey"
+      ],
+      "properties": {
+        "applicationKey": {
+          "type": "string"
+        },
+        "verificationCode": {
+          "type": "string"
+        },
+        "speechDetector": {
+          "enum":[
+            "legacy",
+            "adaptive",
+            "engine"
+          ]
+        },
+        "beginNoiseSampleFrames": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+        },
+        "voiceThreshold": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+        },
+        "startOfSpeechFrames": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+        },
+        "startOfSpeechVoicedFrames": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+        },
+        "startOfSpeechHistoryFrames": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+        },
+        "endOfSpeechFrames": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+        },
+        "endOfSpeechVoicedFrames": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+        },
+        "endOfSpeechHistoryFrames": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum":true
+        },
+        "considerNegativeRatios": {
+          "type": "boolean"
+        },
+        "speechRecognitionCodec": {
+          "$ref": "SessionlessSchema.json#/properties/speechRecognitionCodec"
+        },
+        "speechSynthesisCodec": {
+          "$ref": "SessionlessSchema.json#/properties/speechSynthesisCodec"
+        },
+        "clientUserId": {
+          "type": "string",
+          "minLength":1
+        },
+        "clientDeviceId": {
+          "type": "string",
+          "minLength":1,
+          "pattern": "^[a-zA-Z0-9_\\-\\.]*$"
+        },
+        "clientSessionId": {
+          "type": "string",
+          "minLength":1
+        },
+        "clientOsName": {
+          "type": "string",
+          "minLength":1
+        },
+        "clientSubscriberId": {
+          "type": "string",
+          "minLength":1
+        },
+        "clientOsVersion": {
+          "type": "string",
+          "minLength":1
+        },
+        "clientCarrier": {
+          "type": "string",
+          "minLength":1
+        },
+        "clientPhoneModel": {
+          "type": "string",
+          "minLength":1
+        },
+        "clientDetails": {
+          "type": "object"
+        },
+        "stubBackend": {
+          "type": "boolean"
+        },
+        "statistics": {
+          "type": "boolean"
+        },
+        "debugAudioCapture": {
+          "type": "number",
+          "minimum":0
+        },
+        "authentication": {
+          "type": "object"
+        },
+        "sensitivity": {
+          "enum": [
+            "encrypted",
+            "masked",
+            "open"
+          ]
+        },
+        "kryptonEnableProfanityFilter": {
+          "type": "boolean"
+        },
+        "speechRecognitionEnableProfanityFilter": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

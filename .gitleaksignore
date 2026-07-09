@@ -1,0 +1,2 @@
+webapi-webapp-war/src/test/resources/secrets/alarms/passwordFileWrong.txt:alarm-password:1
+webapi-webapp-war/src/test/resources/secrets/alarms/passwordFile.txt:alarm-password:1

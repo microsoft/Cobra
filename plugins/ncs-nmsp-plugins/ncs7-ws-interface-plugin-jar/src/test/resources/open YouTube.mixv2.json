@@ -1,0 +1,16 @@
+[ {
+  "concepts" : {
+    "nuance_tv_appname" : [ {
+      "ranges" : [ [ 5, 12 ] ],
+      "literal" : "YouTube",
+      "value" : "YouTube"
+    } ]
+  },
+  "action" : {
+    "intent" : {
+      "confidence" : 1.0,
+      "value" : "nuance_tv_open_app"
+    }
+  },
+  "literal" : "open YouTube"
+} ]

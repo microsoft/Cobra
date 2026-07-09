@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <RollingFile name="WebApiPlatformRollingFile" fileName="logs/${web:servletContextName:-noname}.log"
+                     filePattern="logs/${web:servletContextName:-noname}.log_%d{yyyy.MM.dd}-%i">
+            <!--The %replace function matches empty sessionId's and masks them with x's-->
+            <PatternLayout pattern="%replace{%d{yyyy.MM.dd HH:mm:ss.SSS} [%t][%X{session.id}] [$${ctx:application.key:-No TenantID}] %-5level %logger{1.} - %encode{%msg}{CRLF}%n}{\[\]}{\[xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\]}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="1024 MB"/>
+            </Policies>
+        </RollingFile>
+        <Async name="WebApiPlatformAppender">
+            <AppenderRef ref="WebApiPlatformRollingFile"/>
+            <LinkedTransferQueue/>
+        </Async>
+
+    </Appenders>
+
+    <Loggers>
+        <!--<Logger name="com.nuance.cobra" level="trace"/>-->
+        <Root level="warn">
+            <AppenderRef ref="WebApiPlatformAppender"/>
+            <Filters>
+                <!-- The following regex filters out an ERROR message that is normal. This message is not an error -->
+                <!-- for the speech synthesis command. Since this message comes from a third party we cannot change -->
+                <!-- i.e. another team in Nuance, we filter out the message here. See Rally DE14100 for details but -->
+                <!-- Rally won't be accessible anymore when you will want to read this comment. Sorry. -->
+                <RegexFilter regex=".*Session Idle for too long, longer than \[.*\].*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex=".*BCP_LOG_RESPONSE is deprecated.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex=".*Read buffer is null. Maybe requested to disconnect.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                    <filter class="org.apache.log4j.filter.ExpressionFilter">
+                        <param name="Expression" value="Error when creating PropertyDescriptor for public final void org.apache.commons.configuration2.AbstractConfiguration.setProperty(java.lang.String,java.lang.Object)! Ignoring this property."/>
+                        <param name="AcceptOnMatch" value="false"/>
+                    </filter>
+            </Filters>
+        </Root>
+    </Loggers>
+
+</Configuration>
+

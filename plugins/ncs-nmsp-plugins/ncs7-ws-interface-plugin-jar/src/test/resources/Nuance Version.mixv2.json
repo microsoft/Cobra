@@ -1,0 +1,15 @@
+[ {
+  "concepts" : {
+    "nuance_tv_query" : [ {
+      "ranges" : [ [ 0, 14 ] ],
+      "literal" : "Nuance Version"
+    } ]
+  },
+  "action" : {
+    "intent" : {
+      "confidence" : 0.41,
+      "value" : "nuance_tv_media_na"
+    }
+  },
+  "literal" : "Nuance Version"
+} ]

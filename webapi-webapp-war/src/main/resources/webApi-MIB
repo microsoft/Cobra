@@ -1,0 +1,30 @@
+NUANCE-WEBAPI-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, enterprises                       FROM SNMPv2-SMI 
+;
+nuance MODULE-IDENTITY
+    LAST-UPDATED "201710200000Z"
+    ORGANIZATION "www.nuance.com"
+    CONTACT-INFO    
+	 "postal: Nuance Communications, Inc. 
+		Worldwide Headquarters 
+		1 Wayside Road 
+		Burlington, MA 01803 
+		United States 
+	Tel:	781-565-5000 
+	Fax: 	781-565-5001"
+    DESCRIPTION
+	"Nuance webAPI MIB file"
+    REVISION     "201710200000Z"
+    DESCRIPTION
+	"First draft"
+    ::= { enterprises 3621 }
+
+webapi       OBJECT IDENTIFIER ::= { nuance 31415 } 
+code       OBJECT IDENTIFIER ::= { webapi 0 }
+severity       OBJECT IDENTIFIER ::= { webapi 1 }
+message       OBJECT IDENTIFIER ::= { webapi 2 }
+internalMessage       OBJECT IDENTIFIER ::= { webapi 3 }
+
+END

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <!-- The following regex filters out an ERROR message that is normal. This message is not an error -->
+            <!-- for the speech synthesis command. Since this message comes from a third party we cannot change -->
+            <!-- i.e. another team in Nuance, we filter out the message here. See Rally DE14100 for details but -->
+            <!-- Rally won't be accessible anymore when you will want to read this comment. Sorry. -->
+            <RegexFilter regex="Session Idle for too long, longer than \[.*\] \(initiated from XMode.parseBcp\)" onMatch="DENY" onMismatch="ACCEPT"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.nuance.cobra.session" level="all" />
+        <Logger name="com.nuance.cobra.api.websocket" level="debug" />
+        <Logger name="com.nuance.cobra.command.SpeechSynthesisCommand" level="debug" />
+        <Logger name="com.nuance.cobra.client.nim.VocalizerNimClient" level="debug" />
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app version="3.0">
+   <display-name>webapi-platform</display-name>
+
+   <filter>
+      <filter-name>headersFilter</filter-name>
+      <filter-class>com.nuance.cobra.servlet.CobraHeadersFilter</filter-class>
+   </filter>
+
+   <!--<filter>-->
+      <!--<filter-name>WebsocketFilter</filter-name>-->
+      <!--<filter-class>com.nuance.cobra.utils.web.WebsocketFilter</filter-class>-->
+   <!--</filter>-->
+
+   <filter-mapping>
+      <filter-name>headersFilter</filter-name>
+      <url-pattern>*</url-pattern>
+   </filter-mapping>
+
+   <!-- Catch all the error codes and exceptions -->
+   <error-page>  
+     <location>/error.html</location>  
+   </error-page> 
+
+<!--
+   <error-page>  
+     <error-code>500</error-code>  
+     <location>/WEB-INF/jsps/errors/error.jsp</location>  
+   </error-page> 
+
+   <error-page>  
+     <exception-type>java.io.IOException</exception-type>
+     <location>/WEB-INF/jsps/errors/error.jsp</location>  
+   </error-page> 
+-->
+
+   <servlet>
+      <servlet-name>WebApiPlatformServlet</servlet-name>
+      <servlet-class>com.nuance.cobra.servlet.WebApiPlatformServlet</servlet-class>
+   </servlet>
+   <servlet>
+      <servlet-name>AuthTokenCacheServlet</servlet-name>
+      <servlet-class>com.nuance.cobra.servlet.AuthTokenCacheServlet</servlet-class>
+   </servlet>
+   <servlet>
+      <servlet-name>MetricsServlet</servlet-name>
+      <servlet-class>com.nuance.cobra.servlet.MetricsServlet</servlet-class>
+   </servlet>
+   <servlet>
+      <servlet-name>HttpServlet</servlet-name>
+      <servlet-class>com.nuance.cobra.api.http.HttpEndpoint</servlet-class>
+   </servlet>
+   <servlet>
+      <servlet-name>TenantValidationServlet</servlet-name>
+      <servlet-class>com.nuance.cobra.servlet.TenantValidationServlet</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>WebApiPlatformServlet</servlet-name>
+      <url-pattern>/websocket/*</url-pattern>
+   </servlet-mapping>
+   <servlet-mapping>
+      <servlet-name>WebApiPlatformServlet</servlet-name>
+      <url-pattern>/nlps/*</url-pattern>
+   </servlet-mapping>
+   <servlet-mapping>
+      <servlet-name>HttpServlet</servlet-name>
+      <url-pattern>/http/*</url-pattern>
+   </servlet-mapping>
+   <servlet-mapping>
+      <servlet-name>AuthTokenCacheServlet</servlet-name>
+      <url-pattern>/mixoauth2/*</url-pattern>
+   </servlet-mapping>
+   <servlet-mapping>
+      <servlet-name>MetricsServlet</servlet-name>
+      <url-pattern>/metrics/*</url-pattern>
+   </servlet-mapping>
+   <servlet-mapping>
+      <servlet-name>TenantValidationServlet</servlet-name>
+      <url-pattern>/validator/*</url-pattern>
+   </servlet-mapping>
+
+
+   <filter>
+      <filter-name>HttpMetricsFilter</filter-name>
+      <filter-class>com.nuance.cobra.servlet.CobraHttpRequestsMetricsFilter</filter-class>
+   </filter>
+
+   <filter-mapping>
+      <filter-name>HttpMetricsFilter</filter-name>
+      <url-pattern>/http/*</url-pattern>
+   </filter-mapping>
+
+
+<!-- Leaving this commented out. For unsupported methods, returns a 403 when enabled (instead of 405) -->
+<!--
+   <security-constraint>
+       <display-name>For metrics, deny all HTTP methods except GET</display-name>
+       <web-resource-collection>
+           <url-pattern>/metrics/*</url-pattern>
+           <http-method-omission>GET</http-method-omission>
+       </web-resource-collection>
+       <auth-constraint/>
+   </security-constraint>
+-->
+
+</web-app>

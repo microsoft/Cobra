@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app version="3.0">
+   <display-name>nvc-nmsp-http-servlet</display-name>
+
+   <!-- Catch all the error codes and exceptions -->
+   <error-page>  
+     <location>/error.html</location>  
+   </error-page> 
+
+   <servlet>
+      <servlet-name>NMDPAsrCmdServlet</servlet-name>
+      <servlet-class>com.nuance.nmsp.servlet.nmas.dictation.NMDPAsrCmdServlet</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>NMDPAsrCmdServlet</servlet-name>
+      <url-pattern>/NMDPAsrCmdServlet/*</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>NMDPTTSCmdServlet</servlet-name>
+      <servlet-class>com.nuance.nmsp.servlet.nmas.tts.NMDPTTSCmdServlet</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>NMDPTTSCmdServlet</servlet-name>
+      <url-pattern>/NMDPTTSCmdServlet/*</url-pattern>
+   </servlet-mapping>
+
+</web-app>

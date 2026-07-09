@@ -1,0 +1,204 @@
+{
+
+  "title": "JSON Schema for Web API 1.0.0",
+
+  "Description": "Validate an interpret request",
+
+  "$schema": "http://json-schema.org/draft-04/schema#",
+
+  "type": "object",
+
+  "required": [
+
+    "type",
+
+    "command"
+
+  ],
+
+  "properties": {
+
+    "version": {
+
+      "type": "string"
+
+    },
+
+    "type": {
+
+      "type": "string",
+
+      "pattern": "^command$"
+
+    },
+
+    "metadata": {
+
+      "type": "object"
+
+    },
+
+    "sessionId": {
+
+      "type": "string"
+
+    },
+
+    "command": {
+
+      "$ref": "#/definitions/interpretationCommand"
+
+    }
+
+  },
+
+  "additionalProperties": false,
+
+  "definitions": {
+
+    "interpretationCommand": {
+
+      "required": [
+
+        "name",
+
+        "id",
+
+        "parameters"
+
+      ],
+
+      "properties": {
+
+        "name": {
+
+          "type": "string",
+
+          "pattern": "^interpretation$"
+
+        },
+
+        "id": {
+
+          "type": "string"
+
+        },
+
+        "parameters": {
+
+          "$ref": "#/definitions/interpretationParameters"
+
+        }
+
+      },
+
+      "additionalProperties": false
+
+    },
+
+    "interpretationParameters": {
+
+      "type": "object",
+
+      "required": [
+
+        "data"
+
+      ],
+
+      "properties": {
+
+        "sessionParameters": {
+          "$ref": "SessionlessSchema.json#"
+        },
+
+        "data": {
+
+          "type": ["object", "string"],
+          "minLength": 1,
+          "maxLength": 64512
+        },
+
+        "type": {
+
+          "enum": [
+            "text",
+            "text/plain",
+            "speechRecognitionVerboseResult"
+          ]
+
+        },
+
+        "dialogModelApplicationVersion": {
+
+          "type": "string"
+
+        },
+        
+        "activeDynamicVocabularySets": {
+
+          "type": "array",
+
+          "items": {
+
+            "type": "string"
+
+          },
+
+          "minItems": 1,
+
+          "uniqueItems": true
+
+        },
+
+        "semanticModelUrl": {
+
+          "type": "string"
+
+        },
+
+        "statistics": {
+
+          "type": "boolean"
+
+        },
+
+        "sensitivity": {
+          "enum": [
+            "encrypted",
+            "masked",
+            "open"
+          ]
+        },
+
+        "language": {
+
+          "type": "string"
+
+        },
+
+        "interpretationVerboseResult": {
+
+          "type": "boolean"
+
+        },
+
+        "maxInterpretations": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 10
+        },
+
+        "loadPersistedWordsets": {
+          "type": "boolean"
+        }
+      },
+
+      "additionalProperties": false
+
+    }
+
+  }
+
+}
+

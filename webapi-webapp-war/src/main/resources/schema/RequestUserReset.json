@@ -1,0 +1,57 @@
+{
+  "title": "JSON Schema for Web API 1.0.0",
+  "Description": "Validate an reset user request",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "type",
+    "sessionId",
+    "command"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "pattern": "^command$"
+    },
+    "sessionId": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "command": {
+      "$ref": "#/definitions/resetUserCommand"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "resetUserCommand": {
+      "required": [
+        "name",
+        "id"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^userReset$"
+        },
+        "id": {
+          "type": "string"
+        },
+        "parameters": {
+          "$ref": "#/definitions/resetUserParameters"
+        }
+      },
+      "additionalProperties": false
+    },
+    "resetUserParameters": {
+      "type": "object",
+      "properties": {
+        "statistics": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

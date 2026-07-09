@@ -1,0 +1,179 @@
+/*
+  Copyright (C) 2018 - 2019 Nuance Communications Inc. All Rights Reserved.
+ 
+  The copyright to the computer program(s) herein is the property of  
+  Nuance Communications Inc. The program(s) may be used and/or copied
+  only with the written permission from Nuance Communications Inc.
+  or in accordance with the terms and conditions stipulated in the
+  agreement/contract under which the program(s) have been supplied.
+ */
+
+syntax = "proto3";
+
+package nuance.rpc;
+
+option java_multiple_files = true;
+option java_package = "com.nuance.rpc";
+
+/*
+  The idea of this package is to provide the common detail objects to be used 
+  with service-specific status messages.
+
+  The overall idea is inspired by RFC-7807 (Problem Details for HTTP APIs) and 
+  Google's recommendations about representing the errors in the APIs.
+
+  The idea is that the custom status or error responses for different RPC methods
+  would include the fields using the message types defined in this package in 
+  order to provide various details of the error/status. In other words, use the
+  composition pattern for buildig the service-specific error messages based on the
+  common types.
+
+  Note on the messages. In general, the API must differentiate between the text
+  messages returned for the developer consumption (or logging) and the messages
+  intended for displaying to the end user, e.g. in the UI. The latter ones must
+  be localized, otherwise it is not safe to display it. All Nuance gRPC APIs
+  that want the server to provide localized errors are expected to honor HTTP
+  "Accept-Language" header or application-specific language settings, if supported.
+*/
+
+/*
+This message is used to control how quickly the client may retry the request if
+the request is retryable. Failure to respect this retry info may indicate the
+misbehaving client.
+*/
+message RetryInfo {
+  // Clients should wait at least this long between retrying the same request.
+  int32 retry_delay_ms = 1;
+}
+
+/*
+A message may use this type to refer to the original request that resulted in an
+error. This may be particularly useful in the streaming scenarios where the
+correlation between the request and response may not be so obvious.
+*/
+message RequestInfo {
+  // Identifier of the original request. For example, it may be the OpenTracing ID
+  // of the original request.
+  string request_id = 1;
+
+  // Any relevant data from the original request (free format) that may be needed
+  // troubleshooting.
+  string request_data = 2;
+
+  // Any relevant data from the original request (free format) that may be needed 
+  // troubleshooting.
+  map<string, string> additional_request_data = 3;
+}
+
+/*
+Provides a reference to the help document that may be shown to the end user in
+order to take an action based on the error/status response. For example, if the
+original request carried a numerical value that is out of allowed range, this
+message may be used to point to the documentation that states the valid range.
+*/
+message HelpInfo {
+  message Hyperlink {
+    // Description of the link. The absence of the localized message should be 
+    // interpreted such as that the server handling the URL will take care
+    // of the language selection/detection.
+    LocalizedMessage description = 1;
+    // URL to offer to the client. If the description message is present, then
+    // it is assumed that this URL uses the same locale or offers the same one
+    // along with other ones.
+    string url = 2;
+  }
+  // set of links related to the context of the enclosing message
+  repeated Hyperlink links = 1;
+}
+
+/*
+A localized message. The choice of the locale is up to the backend. Depending
+on the use case, it may be the preferred language provided by the browser or
+the user-specific locale. The server will do its best to determine
+*/
+message LocalizedMessage {
+  // The locale used following the specification defined at
+  // http://www.rfc-editor.org/rfc/bcp/bcp47.txt.
+  // Examples are: "en-US", "fr-CH", "es-MX"
+  string locale = 1;
+
+  // The localized error message in the above locale.
+  string message = 2;
+
+  // Resource ID - contains a service-specific text resource identifier. This
+  // allows to identify this particular message and provide more appropriate
+  // user-facing message if needed. 
+  string message_resource_id = 3;
+}
+
+/*
+Provides the information about a field violating a rule
+*/
+message FieldViolation {
+
+  enum ViolationType {
+
+    // A required field was not provided.
+    MANDATORY_FIELD_MISSING = 0;
+
+    // A field is invalid due to the value of another field.
+    FIELD_CONFLICT = 1;
+
+    // A field's value must be in a value range.
+    OUT_OF_RANGE = 2;
+
+    // A field's value must be in a specific format.
+    INVALID_FORMAT = 3;
+
+    // A text field's value must be at least n characters long.
+    TOO_SHORT = 4;
+
+    // A text field's value must be maximum n characters long.
+    TOO_LONG = 5;
+
+    // Placeholder for a violation type that doesn't belong to the supported enum values.
+    // Can be used for a use case that doesn't fit the supported values.
+    OTHER = 64;
+
+    // The ViolationType was not set. Very likely due to a bug.
+    UNSPECIFIED = 99;
+  };
+
+  // Dot-separated field name: package.type[.type].field indicating the field in violation
+  string field = 1;
+
+  // Dot-separated field name: package.type[.type].field indicating the
+  // related fields that cause the violation
+  repeated string rel_field = 2;
+
+  // localized error message if
+  LocalizedMessage user_message = 3;
+
+  // US English message
+  string message = 4;
+
+  // Contains the invalid value of the field in violation.
+  // Data types other than string need to be converted to string.
+  string invalid_value = 5;
+
+  // Can be used for automated error handling on the client side.
+  ViolationType violation = 6;
+}
+
+/*
+A status message may have additional details. Usually those details would
+represent a list of underlying causes for the status (typically an error). These
+details are different from the field violations. The field violations point to 
+the fields in the original request while these details are usually expected
+not to be directly connected with the request parameters.
+*/
+message StatusDetail {
+  // (optional) US English message
+  string message = 1;
+
+  // (optional) localized status detail message
+  LocalizedMessage user_message = 2;
+
+  // (optional) extra application-specific information provided as map
+  map<string,string> extras = 3;
+}

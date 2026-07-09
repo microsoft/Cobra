@@ -1,0 +1,55 @@
+{
+  "title": "JSON Schema for Web API 1.0.0",
+  "Description": "Validate a basic request. All requests must follow this basic schema",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id":"resource:schema/RequestBasic.json",
+  "type": "object",
+
+     "required": ["command","type"] ,
+
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "command",
+        "directive"
+      ]
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "command": {
+      "required": [
+        "name",
+        "id"
+      ],
+      "properties": {
+        "name": {
+          "enum": [
+            "startSession",
+            "endSession",
+            "speechSynthesis",
+            "speechRecognition",
+            "interpretation",
+            "uploadDynamicVocabulary",
+            "deleteDynamicVocabulary",
+            "cancelCommand",
+            "getResources",
+            "userReset",
+            "sessionDelete"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "\\S+",
+          "minLength":1
+        },
+        "parameters": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

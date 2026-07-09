@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Command Chain",
+  "description": "Requirements that all command chain requests (requests with type \"commandChain\") must meet.",
+  "type": "object",
+  "oneOf": [
+    {
+      "properties": {
+        "commands": {
+          "type": "array",
+          "items": [
+            {
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "pattern": "^startSession$"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "required": [
+        "sessionId"
+      ]
+    }
+  ],
+  "required": [
+    "commands"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "enum": [
+        "commandChain"
+      ]
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "chainId": {
+      "type": "string",
+      "pattern": "\\S+",
+      "minLength":1
+    },
+    "sessionId": {
+      "type": "string"
+    },
+    "commands": {
+      "type": "array"
+    }
+  }
+}

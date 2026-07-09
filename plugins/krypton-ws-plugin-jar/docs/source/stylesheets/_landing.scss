@@ -1,0 +1,106 @@
+////////////////////////////////////////////////////////////////////////////////
+// CONTENT STYLES
+////////////////////////////////////////////////////////////////////////////////
+// This is all the stuff need for the landing page area
+
+.content .products-container {
+	padding: 18px 28px;
+	margin: 0;
+	text-align: center;
+	margin-right: 50%;
+	display: block;	
+	background: #F2F6F8;
+}
+
+.content .products {
+	overflow: hidden;	
+	background-color: transparent;
+	color: black;
+	text-align: left;
+	position: relative;
+	left: 2px;
+}
+
+.content .product-title {
+	font-size: 20px;
+	color: #636E7D; 
+	font-weight: 600;
+	letter-spacing: 1px;
+	margin: 0 0 6px 0;
+	padding: 0; 
+}
+
+.content .products ul {
+    grid-template-columns: repeat(2, 1fr);
+	list-style: none;
+	margin: 0 auto;
+	width: 100%;
+	color: #636E7D;
+	padding: 20px 4px;
+	display: -ms-grid;
+	display: grid;
+	-ms-grid-row-align: flex-start;
+	align-items: flex-start;
+	grid-row-gap: 30px;	
+	grid-column-gap: 10px;
+	box-sizing: border-box;
+}
+
+.content .products li {
+	margin: 0;
+	min-height: 120px;   
+	padding: 0;
+	font-weight: 600;
+	position: relative;
+	padding: 20px 20px 40px 20px;
+	border-radius: 8px;	
+	background-color: #fff;
+	background-image: url(images/rocket-launch.png);
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	box-shadow: 2px 4px 8px 2px #E2E2E2;	
+	border: 2px solid transparent;						   
+	cursor: pointer;
+}
+
+.content .products li:hover {
+border: 2px solid #00A4FF;
+}
+
+.content .products li span {
+	font-weight: 600;
+	font-size: 12px;
+	display: block;
+	margin: 4px 0;
+	color: #333;
+}
+
+.content .products li:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+
+.products a:link,.products a:visited,.products a:hover,.products a:active,.products a:focus {
+	text-decoration: none;
+	color: #00A4FF;
+	font-weight: 600;
+}
+
+.products a:link,.products a:hover,.products a:visited {outline: none;}
+
+.content .products li.mix { background-image: url(images/mix.png); }
+.content .products li.book { background-image: url(images/book.png); }
+.content .products li.best { background-image: url(images/best-practices.png); }
+.content .products li.rocket { background-image: url(images/rocket-launch.png); }
+.content .products li.ballot-check { background-image: url(images/ballot-check.png); }
+.content .products li.desktop { background-image: url(images/desktop.png); }
+.content .products li.comment-alt { background-image: url(images/comment-alt.png); }
+.content .products li.comments-alt { background-image: url(images/comments-alt.png); }
+.content .products li.file-code { background-image: url(images/file-code.png); }
+.content .products li.waveform-path { background-image: url(images/waveform-path.png); }
+.content .products li.robot { background-image: url(images/robot.png); }
+.content .products li.tts { background-image: url(images/tts.png); }
+
+
+@media (max-width: $phone-width) {
+	.content .products-container { margin-right: 0; }
+}

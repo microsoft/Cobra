@@ -1,0 +1,46 @@
+{
+  "title": "JSON Schema for Web API 1.0.0",
+  "Description": "Validate a speech recognition request",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "type",
+    "sessionId",
+    "command"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "pattern": "^command$"
+    },
+    "sessionId": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "command": {
+      "$ref": "#/definitions/cancelCommand"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "cancelCommand": {
+      "required": [
+        "name",
+        "id"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^cancelCommand$"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
+

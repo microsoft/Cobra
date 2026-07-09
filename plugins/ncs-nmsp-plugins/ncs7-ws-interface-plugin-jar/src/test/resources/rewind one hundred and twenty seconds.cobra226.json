@@ -1,0 +1,24 @@
+[ {
+  "concepts" : [ {
+    "concepts" : [ {
+      "concept" : "nuance_DURATION",
+      "value" : {
+        "nuance_DURATION_ABS" : {
+          "nuance_UNIT" : "second",
+          "nuance_NUMBER" : 120.0
+        }
+      },
+      "literal" : "one hundred and twenty seconds",
+      "begin" : 7,
+      "end" : 37
+    } ],
+    "concept" : "nuance_tv_duration",
+    "literal" : "one hundred and twenty seconds",
+    "begin" : 7,
+    "end" : 37
+  } ],
+  "confidence" : 100,
+  "literal" : "rewind one hundred and twenty seconds",
+  "intent" : "nuance_tv_mediacmd_rewind",
+  "origin" : "GRAMMAR"
+} ]

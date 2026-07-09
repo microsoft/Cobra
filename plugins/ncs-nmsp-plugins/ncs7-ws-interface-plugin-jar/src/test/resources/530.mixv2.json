@@ -1,0 +1,22 @@
+[ {
+  "concepts" : {
+    "nuance_tv_value" : [ {
+      "concepts" : {
+        "nuance_CARDINAL_NUMBER" : [ {
+          "value" : "530",
+          "ranges" : [ [ 0, 3 ] ],
+          "literal" : "530"
+        } ]
+      },
+      "ranges" : [ [ 0, 3 ] ],
+      "literal" : "530"
+    } ]
+  },
+  "action" : {
+    "intent" : {
+      "confidence" : 1.0,
+      "value" : "nuance_tv_channel_set"
+    }
+  },
+  "literal" : "530"
+} ]

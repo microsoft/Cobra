@@ -1,0 +1,26 @@
+[ {
+  "concepts" : [ {
+    "concepts" : [ {
+      "concept" : "nuance_DURATION",
+      "value" : {
+        "nuance_DURATION_ABS" : {
+          "nuance_UNIT" : "second",
+          "nuance_NUMBER" : {
+            "nuance_CARDINAL_NUMBER" : 4835.0
+          }
+        }
+      },
+      "literal" : "1 hour 20 minutes 35 seconds",
+      "begin" : 10,
+      "end" : 38
+    } ],
+    "concept" : "nuance_tv_duration",
+    "literal" : "1 hour 20 minutes 35 seconds",
+    "begin" : 10,
+    "end" : 38
+  } ],
+  "confidence" : 100,
+  "literal" : "rewind by 1 hour 20 minutes 35 seconds",
+  "intent" : "nuance_tv_mediacmd_rewind",
+  "origin" : "GRAMMAR"
+} ]

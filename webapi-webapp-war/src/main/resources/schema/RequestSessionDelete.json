@@ -1,0 +1,71 @@
+{
+  "title": "JSON Schema for Web API 1.0.0",
+  "Description": "Validate an delete sessions' data",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "type",
+    "sessionId",
+    "command"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "pattern": "^command$"
+    },
+    "sessionId": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "command": {
+      "$ref": "#/definitions/sessionDeleteCommand"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "sessionDeleteCommand": {
+      "required": [
+        "name",
+        "id",
+        "parameters"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^sessionDelete$"
+        },
+        "id": {
+          "type": "string"
+        },
+        "parameters": {
+          "$ref": "#/definitions/sessionDeleteParameters"
+        }
+      },
+      "additionalProperties": false
+    },
+    "sessionDeleteParameters": {
+      "type": "object",
+      "required": [
+        "sessions"
+      ],
+      "properties": {
+
+        "statistics": {
+          "type": "boolean"
+        },
+
+        "sessions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

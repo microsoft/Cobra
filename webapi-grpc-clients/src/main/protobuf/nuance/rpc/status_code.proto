@@ -1,0 +1,100 @@
+/*
+  Copyright (C) 2018 - 2019 Nuance Communications Inc. All Rights Reserved.
+ 
+  The copyright to the computer program(s) herein is the property of  
+  Nuance Communications Inc. The program(s) may be used and/or copied
+  only with the written permission from Nuance Communications Inc.
+  or in accordance with the terms and conditions stipulated in the
+  agreement/contract under which the program(s) have been supplied.
+ */
+
+syntax = "proto3";
+
+package nuance.rpc;
+ 
+option java_multiple_files = true;
+option java_package = "com.nuance.rpc";
+
+/*
+Set of global canonical status codes to be commonly used by compliant 
+Nuance APIs. These codes are purposly mis-aligned with HTTP status codes
+to avoid any unwanted associations.
+
+For some of these codes the developer may choose to use the method-specific response
+instead. For example, in some cases it is more practical not to use NOT_FOUND or
+ALREADY_EXISTS but rather return a message of a specific type.
+*/
+enum StatusCode {
+  // Unspecified status
+  UNSPECIFIED = 0;
+
+  // Success 
+  OK = 1;
+
+  // the request used invalid message type and could not be understood by the server, totally inacceptable
+  BAD_REQUEST = 2;
+
+  // the request is generally correct but some constraints or contracts are not satisfied - like a
+  // valid value range, lack of a mandatory field etc.
+  INVALID_REQUEST = 3;
+
+  // operation was cancelled by the request from the client, the remote system state may have changed
+  CANCELLED_CLIENT = 4;
+
+  // operation was cancelled by the server, the remote system state may have changed
+  CANCELLED_SERVER = 5;
+
+  // deadline set for the operation has been exceeded
+  DEADLINE_EXCEEDED = 6;
+
+  // authorization required, client has not supplied the required authorization credentials to access 
+  // the operation
+  NOT_AUTHORIZED = 7;
+
+  // permission issue, the client is not authorized to operate on the entity/entities requested. It is different from
+  // NOT_AUTHORIZED, in this case the client is generally allowed to perform the operation but not on the entites requested.
+  PERMISSION_DENIED = 8;
+
+  // requested entity was not found
+  NOT_FOUND = 9;
+
+  // the create-like request has not resulted in any changes to the server state because the
+  // identical data entity already exists
+  ALREADY_EXISTS = 10;
+
+  // The requested operation or the value of one of its parameters is not implemented or not yet implemented. This
+  // is different from INVALID_REQUEST, in this case all the request values are valid. A good example would be 
+  // unsupported media type, unsupported algorithm (if specified as method argument) etc.
+  NOT_IMPLEMENTED = 11;
+
+  // Unknown outcome, the result of the request does not map to any defined status. Other response values may provide request-specific additional information.
+  UNKNOWN = 15;
+
+  // ---- less frequently used codes ----
+
+  // the request is valid but one of the message fields is too large to be processed. Note that if it is about
+  // an arbitrary limitation (like first name cannot be longer than 32 characters), it is better to use INVALID_REQUEST.
+  // This code should be used when a technical limitation is reached, like an audio block or another binary block 
+  // is too large to be processed.
+  TOO_LARGE = 51;
+
+  // the server understood the request but could not process it because of the lack of resources. The request
+  // can be retried as-is.
+  BUSY = 52;
+
+  // one of the message types used in the request is no longer supported. This may happen if the request accepts different
+  // version of the data entities and at some point the implementation stops handling one of the older versions
+  OBSOLETE = 53;
+
+  // similar to BUSY but clearly indicates that the client hits a limit in terms of the number of operations per unit of time
+  // and must retry the request later.
+  RATE_EXCEEDED = 54;
+
+  // the client is not allowed to make the request because of a limitation related to the licensing, total number of requests 
+  // allowed, payment etc. This condition will not resolve by itself, an action must be taken by the client representative
+  // to allocate additional quotas for using the service.
+  QUOTA_EXCEEDED = 55;
+
+  // An internal system error experienced while processing the request.
+  INTERNAL_ERROR = 56;
+}

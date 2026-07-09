@@ -1,0 +1,192 @@
+<?xml version="1.0" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.nuance</groupId>
+        <artifactId>webapi</artifactId>
+        <version>2.33.46-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.nuance.mobility.ncs.nvc-nmsp-http-servlet</groupId>
+    <artifactId>nvc-nmsp-http-servlet</artifactId>
+    <version>2.33.46-SNAPSHOT</version>
+    <name>nvc-nmsp-http-servlet</name>
+    <packaging>war</packaging>
+
+    <properties>
+        <nmsp.version>5.2</nmsp.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <rpm.release.name>el7</rpm.release.name>
+        <rpm.install.path>/usr/local/Nuance/webapi</rpm.install.path>
+        <rpm.install.user>njetty</rpm.install.user>
+        <rpm.install.group>njetty</rpm.install.group>
+        <rpm.permission.folder>755</rpm.permission.folder>
+        <rpm.permission.file>755</rpm.permission.file>
+    </properties>
+
+    <dependencies>
+
+        <!-- Native Netty 4 PDX substrate (replaces the proprietary NMSP SDK) -->
+        <dependency>
+            <groupId>com.nuance</groupId>
+            <artifactId>ncs-nmsp-protocol-utils-jar</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tianscar.javasound</groupId>
+            <artifactId>javasound-speex</artifactId>
+            <!-- <version> SEE MAIN POM DEPENDENCY MANAGEMENT </version> -->
+        </dependency>
+
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.netty/netty -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.2.12.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.3.25</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.nuance</groupId>
+            <artifactId>webapi-utils-testing</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+         <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven</groupId>
+                        <artifactId>maven-archiver</artifactId>
+                        <version>3.6.3</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>rpm</id>
+            <build>
+                <finalName>nvc-nmsp-http-servlet</finalName>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>rpm-maven-plugin</artifactId>
+                        <version>2.2.0</version>
+                        <executions>
+                            <execution>
+                                <id>generate-rpm</id>
+                                <goals>
+                                    <goal>rpm</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <license>Copyright (c) Nuance Communications, Inc. All rights reserved.</license>
+                            <distribution>el7</distribution>
+                            <group>Applications/Nuance</group>
+                            <packager>Nuance Communications</packager>
+                            <prefix>/usr/local</prefix>
+                            <name>nvc-nmsp-http-servlet</name>
+                            <release>${rpm.release.name}</release>
+                            <packager>Nuance Communications, Inc.</packager>
+
+                            <requires>
+                                <require>nina-webapi-jetty</require>
+                            </requires>
+
+                            <provides>
+                                nvc-nmsp-http-servlet
+                            </provides>
+
+                            <preinstallScriptlet>
+                                <script>mv -f /usr/local/Nuance/webapi/webapps/ROOT
+                                    /usr/local/Nuance/webapi/webapps/ROOT-bak || true
+                                </script>
+                            </preinstallScriptlet>
+
+                            <mappings>
+                                <mapping>
+                                    <directory>${rpm.install.path}</directory>
+                                    <filemode>${rpm.permission.file}</filemode>
+                                    <dirmode>${rpm.permission.folder}</dirmode>
+                                    <username>${rpm.install.user}</username>
+                                    <groupname>${rpm.install.group}</groupname>
+                                </mapping>
+                                <mapping>
+                                    <directory>${rpm.install.path}/webapps</directory>
+                                    <filemode>${rpm.permission.file}</filemode>
+                                    <dirmode>${rpm.permission.folder}</dirmode>
+                                    <username>${rpm.install.user}</username>
+                                    <groupname>${rpm.install.group}</groupname>
+                                    <sources>
+                                        <source>
+                                            <location>${project.build.directory}/nvc-nmsp-http-servlet.war</location>
+                                        </source>
+                                        <source>
+                                            <location>${project.basedir}/nvc-nmsp-http-servlet.xml</location>
+                                        </source>
+                                    </sources>
+                                </mapping>
+                            </mappings>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

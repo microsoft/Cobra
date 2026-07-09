@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.nuance</groupId>
+        <artifactId>webapi</artifactId>
+        <version>2.33.46-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>webapi-plugins</artifactId>
+    <packaging>pom</packaging>
+
+    <!-- THIS IS THE PLUGIN AGGREGATION POM -->
+    <modules>
+        <module>krypton-ws-plugin-jar</module>
+        <module>tts-rest-interface-plugin-jar</module>
+        <module>webapi-backend-monitoring-plugin-jar</module>
+        <module>ncs-nmsp-plugins</module>
+    </modules>
+</project>

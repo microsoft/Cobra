@@ -1,0 +1,37 @@
+//  Copyright (C) 2021 - 2024 Nuance Communications, Inc. All Rights Reserved.
+//
+//  The copyright to the computer program(s) herein is the property of
+//  Nuance Communications, Inc. The program(s) may be used and/or copied
+//  only with the written permission from Nuance Communications, Inc.
+//  or in accordance with the terms and conditions stipulated in the
+//  agreement/contract under which the program(s) have been supplied.
+ 
+syntax = "proto3";
+ 
+package nuance.fabric.forget.v1;
+ 
+import "nuance/rpc/status.proto";
+ 
+option java_multiple_files = true;
+option java_package = "com.nuance.rpc.fabric.forget.v1";
+option java_outer_classname = "ForgetMeService";
+ 
+//ForgetMe service API. 
+service ForgetMe {
+  rpc Forget (ForgetRequest) returns (ForgetResponse);  // Unary API
+}
+  
+message ForgetRequest {
+    string forget_id = 1;                            
+    ForgetType forget_type = 2; 
+    map<string, string> client_data = 3;                // Optional client-supplied key,value pairs (upto 20) to inject into the logs
+}
+ 
+message ForgetResponse {
+  nuance.rpc.Status status = 1;                         // Success means the forget request is accepted
+}
+
+enum ForgetType {
+    USER = 0;  
+    SESSION = 1;
+}
