@@ -1,0 +1,16 @@
+[Unit]
+Description=Nuance WebAPI Jetty4
+After=syslog.target network.target
+
+[Service]
+Type=forking
+User=njetty
+ExecStart=/etc/init.d/jetty4 start
+ExecStop=/etc/init.d/jetty4 stop
+SuccessExitStatus=130 143
+LimitNOFILE=65536
+Restart=on-failure
+Environment=LAUNCHED_BY_SYSTEMD=1
+
+[Install]
+WantedBy=default.target
